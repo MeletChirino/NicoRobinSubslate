@@ -49,7 +49,25 @@ An AI-powered CLI tool to translate subtitles in `.mkv` files using the **tranla
      ```bash
      ollama pull tranlategemma
      ```
-   - Ensure `ffmpeg` is installed on your system for media handling.
+    - Ensure `ffmpeg` is installed on your system for media handling.
+    - Install **MKVToolNix** (for `mkvmerge`):
+
+      **macOS:**
+      ```bash
+      brew install mkvtoolnix
+      ```
+
+      **Linux (Ubuntu/Debian):**
+      ```bash
+      sudo apt update
+      sudo apt install mkvtoolnix
+      ```
+      
+      **Linux (Fedora):**
+      ```bash
+      sudo dnf install mkvtoolnix
+      ```
+    
    
 ## Usage
 ```python
