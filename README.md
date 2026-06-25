@@ -25,10 +25,32 @@ An AI-powered CLI tool to translate subtitles in `.mkv` files using the **tranla
 ## Features
 
 ## Installation
-```bash
-pip install ollama pymkv
-```
 
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/username/mkv-translator-repo.git
+   cd mkv-translator-repo
+   ```
+
+2. **Setup Virtual Environment:**
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate  # On Windows: .\.venv\Scripts\activate
+   ```
+
+3. **Install Dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Prerequisites:**
+   - Ensure [Ollama](https://ollama.ai/) is installed and running.
+   - Pull the required model:
+     ```bash
+     ollama pull tranlategemma
+     ```
+   - Ensure `ffmpeg` is installed on your system for media handling.
+   
 ## Usage
 ```python
 from main import translate_mkv
