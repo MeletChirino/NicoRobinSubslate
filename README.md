@@ -18,11 +18,18 @@ An AI-powered CLI tool to translate subtitles in `.mkv` files using the **tranla
 │   └── utils/           # Helper functions
 │       └── helpers.py
 │   └── main.py          # Entry point
+├── doc/                  # Documentation (cheat sheets, guides)
 ├── tests/                # Unit and integration tests
 └── requirements.txt      # Dependencies
 ```
 
 ## Features
+- Extracts subtitle tracks from MKV containers.
+- Seamless translation using local LLM inference.
+- Re-inserts translated subtitles into the original file format.
+
+## Installation
+...
 
 ## Installation
 
