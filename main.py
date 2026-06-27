@@ -1,74 +1,41 @@
-import subprocess
-import json
-import os
-DEBUG = True
-def get_mkv_metadata(input_file):
-    """
-    Uses ffprobe to get all stream information in JSON format.
-    """
-    command = [
-        'ffprobe',
-        '-v', 'quiet',
-        '-print_format', 'json',
-        '-show_streams',
-        input_file
-    ]
-    result = subprocess.run(command, capture_output=True, text=True)
-    if DEBUG: print(f"{result}")
-    return json.loads(result.stdout)
+from src.core.extractor import MKVExtractor
+from src.core.translator import Translator
 
-def extract_english_subtitles(input_file, output_srt):
-    """
-    Locates the English subtitle track and extracts it.
-    """
-    metadata = get_mkv_metadata(input_file)
-    streams = metadata.get('streams', [])
+# Configuration
+input_file = "movie_sample.mkv"
+anime_title = "My Hero Academia"
 
-    target_track_index = None
+def main():
+    # 1. Initialize Extractor and find target subtitle tracks
+    extractor = MKVExtractor(input_file)
+    target_tracks = extractor.find_target_tracks_with_detection(target_languages=["eng"])
 
-    # Iterate through streams to find subtitles (codec_type == 'subtitle')
-    # and language metadata ('eng')
-    for stream in streams:
-        if stream.get('codec_type') == 'subtitle':
-            tags = stream.get('tags', {})
-            language = tags.get('language', '').lower()
+    if not target_tracks:
+        print("No English tracks found.")
+        return
 
-            if language == 'eng' or language == 'english':
-                # We need the index relative to all subtitle streams for ffmpeg mapping
-                # or the global index. Using global index 'index' is safest with -map 0:v / 0:a / 0:s
-                target_track_index = stream.get('index')
-                print(f"Found English subtitle at global index: {target_track_index}")
-                break
+    # Get the first English track ID found
+    track_id = list(target_tracks.values())[0]
+    print(f"Found English track at ID: {track_id}")
 
-    if target_track_index is None:
-        print(f"No English subtitles found in {input_file}. Defaulting to first subtitle track.")
-        target_track_index = "s:0" # Fallback to first subtitle track
-    else:
-        # Format for ffmpeg mapping
-        target_track_index = f"0:{target_track_index}"
+    # 2. Extract the raw subtitle content
+    raw_content = extractor.extract_subtitle(track_id)
+    if not raw_content:
+        print("Failed to extract content.")
+        return
 
-    # Execution of the extraction
-    extraction_command = [
-        'ffmpeg',
-        '-i', input_file,
-        '-map', str(target_track_index),
-        '-y',
-        output_srt
-    ]
+    # 3. Initialize Translator and perform translation
+    translator = Translator()
+    print(f"Translating {len(raw_content.splitlines())} lines...")
+    
+    translated_content = translator.translate_subtitle_track(
+        content=raw_content, 
+        title=anime_title
+    )
 
-    try:
-        subprocess.run(extraction_command, check=True, capture_output=True)
-        print(f"Successfully extracted to: {output_srt}")
-        return True
-    except subprocess.CalledProcessError as e:
-        print(f"Error during extraction: {e}")
-        return False
+    # 4. Display or save the result
+    print("Translation complete:")
+    print(translated_content)
 
-# Example Usage
-video_source = "movie_sample.mkv"
-subtitle_destination = "extracted_english.srt"
-if DEBUG: print(f"Trying to extract {video_source} from {subtitle_destination}")
-
-result = get_mkv_metadata(video_source)
-# if os.path.exists(video_source):
-#     extract_english_subtitles(video_source, subtitle_destination)
+if __name__ == "__main__":
+    main()
