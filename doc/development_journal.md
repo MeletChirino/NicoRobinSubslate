@@ -21,7 +21,8 @@ An AI-powered CLI tool designed to automate the translation of subtitles within 
 1. **Project Initialization:** Established directory structure (`src`, `core`, `utils`, `doc`).
 2. **Documentation:** Initialized `README.md` with installation, prerequisites (Ollama/FFmpeg), and basic usage instructions.
 3. **Dependency Management:** Created `requirements.txt` and successfully installed packages within a managed `.venv`.
-4. **Subtitles Extraction Core:** Implemented the `MKVExtractor` class using the `pymkv` library. Verified that it can identify subtitle tracks and filter by language code (e.g., `"eng"`, `"fra"`).
+4. **Subtitles Extraction Core:** Implemented `MKVExtractor` using `pymkv`. Features include track identification and intelligent language detection (using `langdetect` as a fallback for unknown tracks). Verified it correctly identifies and filters multiple subtitle tracks.
+5. **Language Normalization:** Added logic to map common 2-letter codes (e.g., 'en', 'fr') to standard ISO 639-2 codes ('eng', 'fra').
 
 ## Knowledge Base Reference
 - Registered a `doc/` folder specifically for repository documentation, including a cheat sheet for the `pymkv` library to ensure consistent API usage across modules.

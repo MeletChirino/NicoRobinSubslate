@@ -4,6 +4,7 @@ An AI-powered CLI tool to translate subtitles in `.mkv` files using the **tranla
 
 ## Features
 - Extracts subtitle tracks from MKV containers.
+- Intelligent language detection (supports multiple languages with automated fallback to `langdetect`).
 - Seamless translation using local LLM inference.
 - Re-inserts translated subtitles into the original file format.
 

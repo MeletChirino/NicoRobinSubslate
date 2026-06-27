@@ -10,7 +10,8 @@ This project is an AI-powered local tool for translating `.mkv` subtitles using 
 ## Project Architecture
 - **Entry Point:** `main.py` (via `translate_mkv` function).
 - **Core Logic:** Located in `src/core/`:
-  - **Extractor (`extractor.py`):** Handles MKV container manipulation using `mkvextract` and `pymkv`. Note: `mkvextract` must be in the system `$PATH`.
+   - **Extractor (`extractor.py`):** Handles MKV container manipulation using `mkvextract` and `pymkv`. Supports intelligent language detection with a fallback to `langdetect` when metadata is missing or ambiguous.
+
   - **Translator (Planned/Partial):** Handles LLM interaction for translation logic.
   - **Inserter (Planned/Partial):** Handles re-inserting translated tracks into MKV files.
 
