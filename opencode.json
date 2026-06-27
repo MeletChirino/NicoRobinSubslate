@@ -7,6 +7,9 @@
                 "baseURL": "http://192.168.1.57:11434/v1"
             },
             "models": {
+                "cyborgxx101/gemma-4-12b-opus-finetuned-mlx:4bit": {
+                    "name": "Gemma+Opus"
+                },
                 "gemma4:12b-mlx": {
                     "name": "Gemma4-MLX"
                 }
