@@ -1,4 +1,4 @@
-# MKV Subtitle Translator
+# NicoRoobinSubslate project
 
 An AI-powered CLI tool to translate subtitles in `.mkv` files using the **tranlategemma** model via **Ollama**.
 
